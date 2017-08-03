@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WorldWind from 'webww';
+import WorldWind from '@nasaworldwind/worldwind';
 
 class WorldWindComponent extends Component{
 
