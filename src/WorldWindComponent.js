@@ -27,6 +27,21 @@ class WorldWindComponent extends Component{
         this.wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(this.wwd));
         this.wwd.addLayer(new WorldWind.ViewControlsLayer(this.wwd));
 
+        var kmlFilePromise = new KmlFile('data/KML_Samples.kml', [new KmlTreeVisibility('treeControls', this.wwd)]);
+        kmlFilePromise.then(function (kmlFile) {
+            var renderableLayer = new WorldWind.RenderableLayer("Surface Shapes");
+            renderableLayer.currentTimeInterval = [
+                new Date("Mon Aug 09 2015 12:10:10 GMT+0200 (Střední Evropa (letní čas))").valueOf(),
+                new Date("Mon Aug 11 2015 12:10:10 GMT+0200 (Střední Evropa (letní čas))").valueOf()
+            ];
+            renderableLayer.addRenderable(kmlFile);
+
+            this.wwd.addLayer(renderableLayer);
+            this.wwd.redraw();
+        });
+
+        var highlightController = new WorldWind.HighlightController(this.wwd);
+
     }
 
     render() {
