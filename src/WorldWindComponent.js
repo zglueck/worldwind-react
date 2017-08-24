@@ -16,18 +16,20 @@ class WorldWindComponent extends Component{
         
         // Create a World Window for the canvas. Note passing the
         // Canvas id through a React ref.
-        this.wwd = new WorldWind.WorldWindow(this.refs.canvasOne.id);
+        var WorldWindow = this.wwd;
+        WorldWindow = new WorldWind.WorldWindow(this.refs.canvasOne.id);
         
         // Add layers to the WorldWindow
-        this.wwd.addLayer(new WorldWind.BMNGOneImageLayer());
-        this.wwd.addLayer(new WorldWind.BingAerialWithLabelsLayer());
+        WorldWindow.addLayer(new WorldWind.BMNGOneImageLayer());
+        WorldWindow.addLayer(new WorldWind.BingAerialWithLabelsLayer());
         
         // Add a compass, a coordinates display and some view controls to the World Window.
-        this.wwd.addLayer(new WorldWind.CompassLayer());
-        this.wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(this.wwd));
-        this.wwd.addLayer(new WorldWind.ViewControlsLayer(this.wwd));
+        WorldWindow.addLayer(new WorldWind.CompassLayer());
+        WorldWindow.addLayer(new WorldWind.CoordinatesDisplayLayer(WorldWindow));
+        WorldWindow.addLayer(new WorldWind.ViewControlsLayer(WorldWindow));
+        
+        var kmlFilePromise = new WorldWind.KmlFile('data/KML_Samples.kml');
 
-        var kmlFilePromise = new KmlFile('data/KML_Samples.kml', [new KmlTreeVisibility('treeControls', this.wwd)]);
         kmlFilePromise.then(function (kmlFile) {
             var renderableLayer = new WorldWind.RenderableLayer("Surface Shapes");
             renderableLayer.currentTimeInterval = [
@@ -35,13 +37,9 @@ class WorldWindComponent extends Component{
                 new Date("Mon Aug 11 2015 12:10:10 GMT+0200 (Střední Evropa (letní čas))").valueOf()
             ];
             renderableLayer.addRenderable(kmlFile);
-
-            this.wwd.addLayer(renderableLayer);
-            this.wwd.redraw();
+            WorldWindow.addLayer(renderableLayer);
+            WorldWindow.redraw();
         });
-
-        var highlightController = new WorldWind.HighlightController(this.wwd);
-
     }
 
     render() {
