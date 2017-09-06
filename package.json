@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nasaworldwind/worldwind": "file:nasaworldwind-worldwind-0.0.1.tgz",
+    "@nasaworldwind/worldwind": "github:zglueck/WebWorldWind#develop",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10"
+    "react-scripts": "^1.0.10"
   },
   "scripts": {
     "start": "react-scripts start",
